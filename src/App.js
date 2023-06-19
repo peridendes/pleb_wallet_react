@@ -10,7 +10,7 @@ function App() {
       .get("https://api.coinbase.com/v2/prices/BTC-USD/spot")
       // .then is a promise that will run when the API call is successful
       .then((res) => {
-        setPrice(res.data.data.amount);
+        setPrice(Math.round(res.data.data.amount * 100) / 100).toFixed(2);
       })
       // .catch is a promise that will run if the API call fails
       .catch((err) => {
