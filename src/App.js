@@ -93,7 +93,7 @@ function App() {
     getPrice();
     getWalletBalance();
     getTransactions();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Run these functions every 5 seconds after initial page load
   useEffect(() => {
@@ -103,7 +103,7 @@ function App() {
       getTransactions();
     }, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="App">
