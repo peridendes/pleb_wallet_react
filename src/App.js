@@ -32,7 +32,7 @@ function App() {
   const getWalletBalance = () => {
   // ToDo: Lookup how to move the X-API-Key to a .env file to keep it secret for when we push to Github
     const headers = {
-      "X-Api-Key": "480cd563f711435d90ac7afebccac552",
+      "X-Api-Key": process.env.REACT_APP_PRIVATE_KEY,
     };
     axios
       .get("https://legend.lnbits.com/api/v1/wallet", { headers })
@@ -46,7 +46,7 @@ function App() {
   const getTransactions = () => {
     // ToDo: Lookup how to move the X-API-Key to a .env file to keep it secret for when we push to Github
     const headers = {
-      "X-Api-Key": "480cd563f711435d90ac7afebccac552",
+      "X-Api-Key": process.env.REACT_APP_PRIVATE_KEY,
     };
     axios
       .get("https://legend.lnbits.com/api/v1/payments", { headers })
@@ -93,7 +93,6 @@ function App() {
     getPrice();
     getWalletBalance();
     getTransactions();
-    console.log(process.env.REACT_APP_PRIVATE_KEY);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Run these functions every 5 seconds after initial page load
@@ -102,8 +101,7 @@ function App() {
       getPrice();
       getWalletBalance();
       getTransactions();
-      console.log(process.env.REACT_APP_PRIVATE_KEY);
-    }, 30000);
+    }, 5000);
     return () => clearInterval(interval);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
