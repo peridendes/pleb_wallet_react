@@ -93,6 +93,7 @@ function App() {
     getPrice();
     getWalletBalance();
     getTransactions();
+    console.log(process.env.REACT_APP_PRIVATE_KEY);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Run these functions every 5 seconds after initial page load
@@ -101,6 +102,7 @@ function App() {
       getPrice();
       getWalletBalance();
       getTransactions();
+      console.log(process.env.REACT_APP_PRIVATE_KEY);
     }, 30000);
     return () => clearInterval(interval);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
