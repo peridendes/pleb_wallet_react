@@ -1,7 +1,10 @@
 import React from "react";
 import "./Transactions.css";
 
-export const Transactions = ({ transactions }) => {
+export const Transactions = ({transactions}) => {
+  console.log({transactions});
+
+  // ToDo: Improve tx parsing to display internal payments, incomplete payments, and further verify the transactions we are listing out
   // ToDo: Improve tx parsing to display internal payments, incomplete payments, and further verify the transactions we are listing out
   const parseTx = (tx) => {
     // turn unix timestamp into a date
@@ -31,7 +34,7 @@ export const Transactions = ({ transactions }) => {
       );
     }
   };
-
+  
   return (
     <div>
       <h3>Transactions</h3>

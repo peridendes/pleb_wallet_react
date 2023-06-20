@@ -1,23 +1,20 @@
 import React, { useState } from "react";
-import "./Buttons.css";
 import PaymentsModal from "./PaymentsModal";
+import "./Buttons.css";
 
 export const Buttons = () => {
   const [modalState, setModalState] = useState({
     type: "",
     open: false,
   });
-
+ 
   return (
     <div>
       <div className="buttons">
         <button
           className="button"
           onClick={() =>
-            setModalState({
-              type: "send",
-              open: true,
-            })
+            setModalState({ type: "send", open: true })
           }
         >
           Send
@@ -25,10 +22,7 @@ export const Buttons = () => {
         <button
           className="button"
           onClick={() =>
-            setModalState({
-              type: "receive",
-              open: true,
-            })
+            setModalState({ type: "receive", open: true })
           }
         >
           Receive

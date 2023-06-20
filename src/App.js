@@ -1,27 +1,26 @@
 import React, { useEffect, useState } from "react";
-import Chart from "./components/Chart";
-import Buttons from "./components/Buttons";
 import Transactions from "./components/Transactions";
+import Buttons from "./components/Buttons";
+import Chart from "./components/Chart";
 import axios from "axios";
 import "./App.css";
 
 function App() {
-  // useState lets us store/update/pass data from inside of this component and also refresh the component when the data changes
-  // Though this data will be lost on a refresh since we dont have a database
   const [price, setPrice] = useState(null);
   const [balance, setBalance] = useState(null);
-  const [chartData, setChartData] = useState(null);
   const [transactions, setTransactions] = useState([]);
+  const [chartData, setChartData] = useState(null);
 
   const getPrice = () => {
     // Axios is a library that makes it easy to make http requests
-    // After we make a request, we can use the .then() method to handle the response asychronously
+    // After we make a request, we can use the .then() method to handle the response asynchronously
     // This is an alternative to using async/await
     axios
       .get("https://api.coinbase.com/v2/prices/BTC-USD/spot")
       // .then is a promise that will run when the API call is successful
       .then((res) => {
-        setPrice(res.data.data.amount);
+        console.log(res.data.data.amount);
+        setPrice((Math.round(res.data.data.amount * 100) / 100).toFixed(2));
         updateChartData(res.data.data.amount);
       })
       // .catch is a promise that will run if the API call fails
@@ -31,9 +30,9 @@ function App() {
   };
 
   const getWalletBalance = () => {
-    // ToDo: Lookup how to move the X-API-Key to a .env file to keep it secret for when we push to Github
+  // ToDo: Lookup how to move the X-API-Key to a .env file to keep it secret for when we push to Github
     const headers = {
-      "X-Api-Key": "52cac212fc664da393ac45df991fdb84",
+      "X-Api-Key": "480cd563f711435d90ac7afebccac552",
     };
     axios
       .get("https://legend.lnbits.com/api/v1/wallet", { headers })
@@ -47,7 +46,7 @@ function App() {
   const getTransactions = () => {
     // ToDo: Lookup how to move the X-API-Key to a .env file to keep it secret for when we push to Github
     const headers = {
-      "X-Api-Key": "52cac212fc664da393ac45df991fdb84",
+      "X-Api-Key": "480cd563f711435d90ac7afebccac552",
     };
     axios
       .get("https://legend.lnbits.com/api/v1/payments", { headers })
@@ -56,10 +55,10 @@ function App() {
       })
       .catch((err) => console.log(err));
   };
-
+  
   const updateChartData = (currentPrice) => {
     const timestamp = Date.now();
-    // We are able to grab the previous state to look at it and do logic before adding new data to it
+       // We are able to grab the previous state to look at it and do logic before adding new data to it
     setChartData((prevState) => {
       // If we have no previous state, create a new array with the new price data
       if (!prevState)
@@ -69,7 +68,7 @@ function App() {
             y: Number(currentPrice),
           },
         ];
-      // If the timestamp or price has not changed, we dont want to add a new point
+      // If the timestamp or price has not changed, we don't want to add a new point
       if (
         prevState[prevState.length - 1].x === timestamp ||
         prevState[prevState.length - 1].y === Number(currentPrice)
@@ -85,7 +84,7 @@ function App() {
         },
       ];
     });
-  };
+  }; 
 
   // useEffect is a 'hook' or special function that will run code based on a trigger
   // The brackets hold the trigger that determines when the code inside of useEffect will run
@@ -98,12 +97,11 @@ function App() {
 
   // Run these functions every 5 seconds after initial page load
   useEffect(() => {
-    // setInterval will run whatever is in the callback function every 5 seconds
     const interval = setInterval(() => {
       getPrice();
       getWalletBalance();
       getTransactions();
-    }, 5000);
+    }, 30000);
     return () => clearInterval(interval);
   }, []);
 

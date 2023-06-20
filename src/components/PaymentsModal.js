@@ -25,13 +25,12 @@ const PaymentsModal = ({ modalState, setModalState }) => {
     paymentHash: "",
     checkingId: "",
   });
-
+  
   const handleSend = (e) => {
     // Keep the page from refreshing when the form is submitted
     e.preventDefault();
-
     const headers = {
-      "X-Api-Key": "52cac212fc664da393ac45df991fdb84",
+      "X-Api-Key": "480cd563f711435d90ac7afebccac552",
     };
     const data = {
       bolt11: formData.invoiceToPay,
@@ -46,16 +45,15 @@ const PaymentsModal = ({ modalState, setModalState }) => {
         })
       )
       .catch((err) => console.log(err));
-
     return;
   };
-
+ 
   const handleReceive = (e) => {
     // Keep the page from refreshing when the form is submitted
     e.preventDefault();
-
+ 
     const headers = {
-      "X-Api-Key": "52cac212fc664da393ac45df991fdb84",
+      "X-Api-Key": "480cd563f711435d90ac7afebccac552",
     };
     const data = {
       amount: formData.amount,
@@ -67,10 +65,8 @@ const PaymentsModal = ({ modalState, setModalState }) => {
       .post("https://legend.lnbits.com/api/v1/payments", data, { headers })
       .then((res) => setInvoice(res.data.payment_request))
       .catch((err) => console.log(err));
-
-    return;
-  };
-
+  }; 
+  
   // Function to clear all of our state when we close the modal
   const clearForms = () => {
     setModalState({
@@ -87,7 +83,7 @@ const PaymentsModal = ({ modalState, setModalState }) => {
       invoiceToPay: "",
     });
   };
-
+    
   return (
     <Modal
       isOpen={modalState.open}
@@ -112,7 +108,7 @@ const PaymentsModal = ({ modalState, setModalState }) => {
             value={formData.invoiceToPay}
             onChange={(e) =>
               setFormData({ ...formData, invoiceToPay: e.target.value })
-            }
+             }
           />
           <button className="button" onClick={(e) => handleSend(e)}>
             Submit
